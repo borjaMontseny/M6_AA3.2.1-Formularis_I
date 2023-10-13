@@ -1,222 +1,111 @@
+<!-- borjaMontseny DAW2 M06 2023 -->
 <!DOCTYPE html>
-<html lang="ca">
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Validacions formularis</title>
-    <style>
-        * {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        html {
-            padding: 3%;
-        }
-
-        .red {
-            color: #f00;
-        }
-    </style>
+	<meta charset="UTF-8">
+	<title>IBC Pizza</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="estils.css">
 </head>
 
 <body>
-    <h1>Activitat per aprendre validar formularis</h1>
-    <h3>En els següents apartats trobaràs informació d'allò que has de validar. El primer que has de fer és evitar que
-        aquest formulari s'enviï enlloc. Per això hauràs d'escriure <code class="red">onsubmit="return false;"</code> en
-        l'etiqueta <span class="red">&ltform&gt</span>, o que la funció associada sempre retorni <span
-            class="red">false</span>. També podries capturar l'esdeveniment i evitar que fes la seva acció per defecte
-        amb
-        <code class="red">onsubmit="event.preventDefault();"</code> però això és quelcom que estudiarem més endavant.
-    </h3>
-    <h3>Quan l'usuari premi el botó d'enviar el formulari s'ha d'executar el codi que hauràs escrit en la funció <code
-            class="red">validar()</code> on bàsicament mostrarem per consola el resum d'allò que s'ha seleccionat.</h3>
-    <hr>
-    <form action="#" method="POST" onsubmit="return validar()">
-        <h3>(1) Valida si el nóm és "Joan". Si no ho és indica-ho. Si el camp està en blanc, indica-ho també.</h3>
-        <label for="fname">First name:</label><br>
-        <input type="text" id="fname" name="fname">
-        <h3>(2) Valida si la contrasenya és "123456". Si no ho és indica-ho. Si el camp està en blanc, indica-ho també.
-        </h3>
-        <label for="pwd">Password:</label><br>
-        <input type="password" id="pwd" name="pwd">
-        <h3>(3) Indica el llenguatge de programació favorit de l'usuari</h3>
-        <input type="radio" id="php" name="fav_language" value="PHP" checked>
-        <label for="php">PHP</label><br>
-        <input type="radio" id="java" name="fav_language" value="Java">
-        <label for="java">Java</label><br>
-        <input type="radio" id="javascript" name="fav_language" value="JavaScript">
-        <label for="javascript">JavaScript</label>
-        <h3>(4) Valida quins checkboxs s'han seleccionat. En cas que no n'hi hagi cap de seleccionat mostra-ho també. En
-            cas que estiguin tots, que surti una frase dient quelcom semblant a "Tinc tots els vehicles"
-        </h3>
-        <input type="checkbox" id="vehicle1" name="vehicle1" value="bicicleta">
-        <label for="vehicle1"> Tinc una bicicleta</label><br>
-        <input type="checkbox" id="vehicle2" name="vehicle2" value="cotxe">
-        <label for="vehicle2"> Tinc un cotxe</label><br>
-        <input type="checkbox" id="vehicle3" name="vehicle3" value="moto">
-        <label for="vehicle3"> Tinc una moto</label>
-        <h3>(5) Escull el teu color preferit i mostra el codi RGB</h3>
-        <label for="favcolor">Paleta de colors:</label>
-        <input type="color" id="favcolor" name="favcolor">
-        <h3>(6) Valida si s'ha seleccionat una data anterior a la data actual.</h3>
-        <label for="birthday">Vas néixer el:</label>
-        <input type="date" id="birthday" name="birthday">
-        <h3>(7) Mira si el valor que és més gran que 25</h3>
-        <label for="vol">Valors (entre 0 i 50):</label>
-        <input type="range" id="vol" name="vol" min="0" max="50">
-        <h3>(8) Mostra quin cotxe té l'usuari</h3>
-        <select id="cars" name="cars">
-            <option value="Volvo">Volvo</option>
-            <option value="Saab">Saab</option>
-            <option value="Fiat">Fiat</option>
-            <option value="Audi">Audi</option>
-        </select>
-        <h3>(9) Mostra a quines ciutats li agradaria viatjar a l'usuari. Si no marca cap ciutat fes-ho constar.</h3>
-        <select id="cities" name="cities" size="4" multiple>
-            <option value="Barcelona">Barcelona</option>
-            <option value="Roma">Roma</option>
-            <option value="Paris">París</option>
-            <option value="Londres">Londres</option>
-        </select>
-        <br /><br />
-        <input type="submit" value="Validar">
-    </form>
-    <script>
-        function validar() {
-            // (1)
-            let fname = document.getElementById("fname").value;
-            let missatge = "";
+	<form action="https://httpbin.org/post" method="post" onsubmit="return validarFormulari()">
 
-            if (fname === "Joan") {
-                missatge += "El nom de l'usuari és Joan\n";
-            } else if (fname.length < 1) {
-                missatge += "El nom de l'usuari està en blanc\n";
-            } else {
-                missatge += "El nom de l'usuari no és Joan\n";
-            }
+		<h1>IBC Pizza</h1>
 
-            // (2)
-            let pwd = document.getElementById("pwd").value;
-
-            if (pwd === "123456") {
-                missatge += "La contrassenya és '123456'\n";
-            } else if (pwd.length < 1) {
-                missatge += "La contrassenya està en blanc\n";
-            } else {
-                missatge += "La contrassenya no és '123456'\n";
-            }
-
-            // (3)
-            let radios = document.getElementsByName("fav_language");
-            let selectedLanguage = null;
-
-            for (let i = 0; i < radios.length; i++) {
-                if (radios[i].checked) {
-                    selectedLanguage = radios[i].value;
-                    break;
-                }
-            }
-
-            if (selectedLanguage !== null) {
-                missatge += "El llenguatge preferit de l'usuari és " + selectedLanguage + "\n";
-            }
-
-            // (4)
-            function validarCheckboxes() {
-                let checkboxes = [
-                    document.getElementById("vehicle1"),
-                    document.getElementById("vehicle2"),
-                    document.getElementById("vehicle3")
-                ];
-
-                let opcionesSeleccionadas = [];
-
-                checkboxes.forEach(function (checkbox) {
-                    if (checkbox.checked) {
-                        opcionesSeleccionadas.push(checkbox.value);
-                    }
-                });
-
-                if (opcionesSeleccionadas.length > 0) {
-                    missatge += "L'usuari té " + opcionesSeleccionadas.join(', ') + "\n";
-                    if (opcionesSeleccionadas.length === checkboxes.length) {
-                        missatge += "L'usuari té tots els vehicles\n";
-                    }
-                } else {
-                    missatge += "No s'ha seleccionat cap vehicle\n";
-                }
-            }
-
-            validarCheckboxes();
-
-            // (5)
-            let favcolor = document.getElementById("favcolor").value;
-            if (favcolor !== "#000000") {
-                missatge += "El color que ha escollit és: " + favcolor + "\n";
-            } else {
-                missatge += "No s'ha escollit cap color\n";
-            }
-
-            // (6)
-            let birthdayString = document.getElementById("birthday").value;
-            let parts = birthdayString.split('-');
-            let birthdayFormatted = parts[1] + '-' + parts[2] + '-' + parts[0];
-            // Format 'MM-DD-YYYY' per al constructor
-            let birthday = new Date(birthdayFormatted);
-            let dataActual = new Date();
-
-            if (birthday < dataActual) {
-                missatge += "L'aniversari és anterior a la data actual\n";
-            } else if (birthday > dataActual) {
-                missatge += "L'aniversari és posterior a la data actual\n";
-            } else {
-                missatge += "L'aniversari i la data actual són iguals\n";
-            }
-
-            // (7)
-            let vol = document.getElementById("vol").value;
-            if (vol < 25) {
-                missatge += "El valor és més petit que 25\n";
-            } else if (vol > 25) {
-                missatge += "El valor és més gran que 25\n";
-            } else {
-                missatge += "El valor és 25\n";
-            }
-
-            // (8)
-            function getOption() {
-                let selectElement = document.querySelector('#cars');
-                opcioSeleccionada = selectElement.value;
-                missatge += "L'usuari ha seleccionat la marca de cotxes: " + opcioSeleccionada + "\n";
-            }
-
-            getOption();
-
-            // (9)
-            function getOption2() {
-                let selectElement = document.querySelector('#cities');
-                let options = selectElement.selectedOptions;
-                let output = [];
-
-                for (let i = 0; i < options.length; i++) {
-                    output.push(options[i].value);
-                }
-
-                if (output.length > 0) {
-                    missatge += "A l'usuari li agradaria viatjar a: " + output.join(', ');
-                } else {
-                    missatge += "No s'ha seleccionat cap ciutat";
-                }
-            }
-
-            getOption2();
-
-            console.log(missatge);
-
-            return false;
-        }
-    </script>
+		<table>
+			<tr>
+				<th><label for="customerName">Customer Name</label></th>
+				<th><label for="telephone">Telephone</label></th>
+				<th><label for="emailAddress">E-mail Address</label></th>
+			</tr>
+			<tr>
+				<td><input type="text" id="customerName" name="customerName"></td>
+				<td><input type="text" id="telephone" name="telephone"></td>
+				<td><input type="text" id="emailAddress" name="emailAddress"></td>
+			</tr>
+		</table>
+		<br>
+		<table>
+			<tr>
+				<th colspan="3">Pizza Size</th>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" id="small" name="pizzaSize" value="small" checked>
+					<label for="small">Small</label><br>
+				</td>
+				<td>
+					<input type="radio" id="medium" name="pizzaSize" value="medium">
+					<label for="medium">Medium</label><br>
+				</td>
+				<td>
+					<input type="radio" id="large" name="pizzaSize" value="large">
+					<label for="large">Large</label><br>
+				</td>
+			</tr>
+		</table>
+		<br>
+		<table>
+			<tr>
+				<th colspan="3">Pizza Toppings</th>
+			</tr>
+			<tr>
+				<td>
+					<input type="checkbox" id="bacon" name="bacon" value="bacon">
+					<label for="bacon">🥓 Bacon</label><br>
+				</td>
+				<td>
+					<input type="checkbox" id="extraCheese" name="extraCheese" value="extraCheese">
+					<label for="extraCheese">🧀 Extra Cheese</label><br>
+				</td>
+				<td>
+					<input type="checkbox" id="extraTomatoSauce" name="extraTomatoSauce" value="extraTomatoSauce">
+					<label for="extraTomatoSauce">🍅 Extra Tomato Sauce</label><br>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="checkbox" id="onion" name="onion" value="onion">
+					<label for="onion">🧅Onion</label><br>
+				</td>
+				<td>
+					<input type="checkbox" id="spicySauce" name="spicySauce" value="spicySauce">
+					<label for="spicySauce">🌶️ Spicy Sauce</label><br>
+				</td>
+				<td>
+					<input type="checkbox" id="mushroom" name="mushroom" value="mushroom">
+					<label for="mushroom">🍄 Mushroom</label><br>
+				</td>
+			</tr>
+		</table>
+		<br>
+		<table>
+			<tr>
+				<th>
+					<label for="deliveryTime">Preferred delivery time: </label>
+					<input type="time" id="deliveryTime" name="deliveryTime">
+				</th>
+			</tr>
+		</table>
+		<br>
+		<table>
+			<tr>
+				<th>
+					<label for="w3review">Delivery Instructions</label>
+				</th>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="w3review" name="w3review" rows="4" cols="50"></textarea>
+				</td>
+			</tr>
+		</table>
+		<br>
+		<input type="submit" value="🛵 Submit Order 🍃">
+	</form>
+	<script src="exercici.js"></script>
 </body>
 
 </html>
